@@ -16,7 +16,10 @@ const useStyles = makeStyles({
     height: '100%',
     padding: 10,
     fontFamily: 'roboto',
-    fontSize: 24
+    fontSize: 24,
+    '&:hover': {
+      cursor: 'pointer'
+    }
   }
 });
 
