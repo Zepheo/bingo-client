@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     color: 'white'
   },
   notDone: {
-    backgroundColor: 'white'
+    background: 'rgba(255, 255, 255, 0.5)'
   },
   root: {
     height: '100%',
@@ -32,7 +32,11 @@ export default function BingoTile({data}) {
   }
 
   return (
-    <Paper className={`${root} ${data.happened ? done : notDone}`} onClick={() => changeHappened(data.id)}>
+    <Paper
+      className={`${root} ${data.happened ? done : notDone}`}
+      variant='outlined'
+      onClick={() => changeHappened(data.id)}
+    >
       {data.data}
     </Paper>
   )
