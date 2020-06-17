@@ -4,14 +4,15 @@ import { Container, makeStyles } from '@material-ui/core';
 import BingoBoard from './components/BingoBoard'
 import Bingo from './components/Bingo';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    margin: 30,
   }
-})
+}))
 
 function App() {
   const [ bingo, setBingo ] = useState(false);
