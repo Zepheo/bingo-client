@@ -1,6 +1,9 @@
 import { createMuiTheme } from '@material-ui/core';
 import { purple, green} from '@material-ui/core/colors'
 
+import Image from './img/GnomeHeader02-Header-110215.jpg'
+console.log(Image)
+
 const theme = createMuiTheme({
   palette:{
     primary: {
@@ -9,8 +12,15 @@ const theme = createMuiTheme({
     secondary: {
       main: green[500]
     },
-    background: {
-      default: 'lightgray'
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        body: {
+          backgroundImage: `url(${Image})`,
+          backgroundSize: 'cover'
+        }
+      }
     }
   }
 })
