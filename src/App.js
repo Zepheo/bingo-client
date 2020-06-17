@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container, makeStyles } from '@material-ui/core';
+
+import BingoBoard from './components/BingoBoard'
+import Bingo from './components/Bingo';
+
+const useStyles = makeStyles({
+  wrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'column'
+  }
+})
 
 function App() {
+  const [ bingo, setBingo ] = useState(false);
+  const {wrapper} = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth='md' className={wrapper}>
+      {bingo ? <Bingo gotBingo={setBingo}/> : <BingoBoard gotBingo={setBingo}/>}
+    </Container>
   );
 }
 
