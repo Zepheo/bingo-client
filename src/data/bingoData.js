@@ -81,7 +81,7 @@ const bingoData = [
   },
   {
     id: 17,
-    data: '"Moimoi loggar du"',
+    data: '"Moimoi loggar du?"',
     happened: false
   },
   {
