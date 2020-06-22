@@ -15,7 +15,7 @@ const User = (state = initialState, action) => {
     case ADD_ACTIVE_ROOMS:
       return ({
         ...state,
-        rooms: action.rooms.map((room) => room.name)
+        activeRooms: action.rooms
       })
     default:
       return state;

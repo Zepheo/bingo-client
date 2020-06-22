@@ -34,12 +34,16 @@ function App() {
     socket.on('roomCreated', (data) => {
       dispatch(addCards(data.cards))
       dispatch(setUser(data.username, data.roomname))
-      
     })
     socket.on('roomCreationError', (data) => {
       console.log(data);
     })
+    socket.on('roomJoined', (data) => {
+      dispatch(addCards(data.cards))
+      dispatch(setUser(data.username, data.roomname))
+    })
     socket.on('activeRooms', (data) => {
+      // console.log(data)
       dispatch(addActiveRooms(data))
     })
     
@@ -54,8 +58,8 @@ function App() {
     socket.emit('create', { name, room, password, zones})
   }
 
-  const joinRoom = (info) => {
-    console.log(info)
+  const joinRoom = ({name, room, password}) => {
+    socket.emit('join', {name, roomname: room.name, password})
   }
 
   return (
