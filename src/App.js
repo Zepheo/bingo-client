@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
-import { Container, makeStyles } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import io from 'socket.io-client';
 
-import BingoBoard from './components/BingoBoard'
-import Bingo from './components/Bingo';
+// import history from './utils/history';
+
+import Landing from './pages/Landing';
+import PlayBingo from './pages/PlayBingo';
+import Create from './pages/Create';
+import Join from './pages/Join';
+import { Container, makeStyles } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUser, setUser, addCards, addActiveRooms } from './redux/actions';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -14,13 +22,54 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const socketUrl = 'localhost:8080';
+const socket = io(socketUrl);
+
 function App() {
-  const [ bingo, setBingo ] = useState(false);
   const {wrapper} = useStyles();
+  const dispatch = useDispatch();
+  const { User } = useSelector(s => s);
+
+  useEffect(() => {
+    socket.on('roomCreated', (data) => {
+      dispatch(addCards(data.cards))
+      dispatch(setUser(data.username, data.roomname))
+      
+    })
+    socket.on('roomCreationError', (data) => {
+      console.log(data);
+    })
+    socket.on('activeRooms', (data) => {
+      dispatch(addActiveRooms(data))
+    })
+    
+    return () => {
+      socket.close();
+      dispatch(removeUser());
+    }
+  }, [dispatch])
+
+
+  const createRoom = ({name, room, password, zones}) => {
+    socket.emit('create', { name, room, password, zones})
+  }
+
+  const joinRoom = (info) => {
+    console.log(info)
+  }
+
   return (
-    <Container maxWidth='md' className={wrapper}>
-      {bingo ? <Bingo gotBingo={setBingo}/> : <BingoBoard gotBingo={setBingo}/>}
-    </Container>
+    <BrowserRouter>
+      {/* <Navigation /> */}
+      <Container maxWidth='md' className={wrapper}>
+        <Switch>
+          <Route exact path='/' render={() => User.name === '' ? <Landing /> : <PlayBingo />} />
+          <Route path='/create' render={() => <Create createRoom={createRoom} />} />
+          <Route path='/join' render={() => <Join joinRoom={joinRoom} />} />
+          <Route path='/bingo' component={PlayBingo} />
+        </Switch>
+      </Container>
+    </BrowserRouter>
   );
 }
 

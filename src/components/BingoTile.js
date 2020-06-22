@@ -2,7 +2,7 @@ import React from 'react'
 import { Paper, makeStyles } from '@material-ui/core'
 import { useDispatch } from 'react-redux';
 
-import { setHappened } from '../redux/actions';
+import { setTicked } from '../redux/actions';
 
 const useStyles = makeStyles({
   done: {
@@ -27,15 +27,15 @@ export default function BingoTile({data}) {
   const { done, notDone, root } = useStyles();
   const dispatch = useDispatch();
 
-  const changeHappened = (id) => {
-    dispatch(setHappened(id))
+  const changeTicked = (id) => {
+    dispatch(setTicked(id))
   }
 
   return (
     <Paper
-      className={`${root} ${data.happened ? done : notDone}`}
+      className={`${root} ${data.ticked ? done : notDone}`}
       variant='outlined'
-      onClick={() => changeHappened(data.id)}
+      onClick={() => changeTicked(data.id)}
     >
       {data.data}
     </Paper>
