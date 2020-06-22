@@ -22,8 +22,10 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const socketUrl = 'localhost:8080';
-const socket = io(socketUrl);
+const socketUrl = 'mighty-ridge-28972.herokuapp.com';
+const socket = io(socketUrl, {
+  'reconnection': false
+});
 
 function App() {
   const {wrapper} = useStyles();
