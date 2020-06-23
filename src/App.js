@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const socketUrl = 'mighty-ridge-28972.herokuapp.com';
+const socketUrl = process.env.NODE_ENV === 'development' ? 'localhost:8080': 'mighty-ridge-28972.herokuapp.com';
 const socket = io(socketUrl, {
   'reconnection': false
 });
@@ -31,6 +31,7 @@ function App() {
   const {wrapper} = useStyles();
   const dispatch = useDispatch();
   const { User } = useSelector(s => s);
+  // console.log(process.env.NODE_ENV)
 
   useEffect(() => {
     socket.on('roomCreated', (data) => {
