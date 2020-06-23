@@ -1,22 +1,22 @@
-import { SET_USER, REMOVE_USER, ADD_ACTIVE_ROOMS } from "../actions/actionTypes";
+import { LOG_IN, LOG_OUT, ADD_ACTIVE_ROOMS } from "../actions/actionTypes";
 
-const initialState = { name: '', room: '', activeRooms: []};
+const initialState = { name: null, room: null, activeRooms: []};
 
 const User = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USER:
+    case LOG_IN:
       return ({
         ...state,
         name: action.name,
-        room: action.room
+        room: action.room,
       });
-    case REMOVE_USER:
-      return initialState;
     case ADD_ACTIVE_ROOMS:
       return ({
         ...state,
         activeRooms: action.rooms
       })
+    case LOG_OUT:
+      return initialState;
     default:
       return state;
   }

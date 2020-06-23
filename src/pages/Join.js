@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { TextField, Button, makeStyles, Typography, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { join, subscribeTo, addCards, logIn, unsubscribeFrom } from '../redux/actions';
+import { useEffect } from 'react';
 // import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,20 +13,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Join({joinRoom}) {
+export default function Join() {
   const [ state, setState ] = useState({name: '', room: '', password: ''})
   const User = useSelector(s => s.User)
   const { container } = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(subscribeTo('roomJoined', (data) => {
+      dispatch(addCards(data.cards))
+      dispatch(logIn(data.name, data.room))
+      history.push('/bingo')
+    }))
+    return () => {
+      dispatch(unsubscribeFrom('roomJoined'))
+    }
+  }, [history, dispatch])
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
-    try {
-      joinRoom(state);
-      history.push('/')
-    } catch (error) {
-      console.log(error)
-    }
+    dispatch(join({name: state.name, roomname: state.room.name}))
   };
 
   if (User.activeRooms.length < 1) {
@@ -55,7 +64,7 @@ export default function Join({joinRoom}) {
         onChange={(e) => setState({...state, name: e.target.value})}
         autoComplete='off'
       />
-      <FormControl variant='outlined'>
+      <FormControl variant='outlined' required>
         <InputLabel id='select-room-label'>Room</InputLabel>  
         <Select
           labelId='select-room-label'

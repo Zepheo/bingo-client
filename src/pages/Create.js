@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, TextField, makeStyles, FormGroup, Checkbox, FormControlLabel, FormControl } from '@material-ui/core'
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+import { subscribeTo, addCards, logIn, create, unsubscribeFrom} from '../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,19 +18,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create({createRoom}) {
   const [ state, setState ] = useState({name: '', room: '', password: '', zones: []})
+  const [ error, setError ] = useState(null);
   const { container, checkboxContainer } = useStyles();
   const history = useHistory();
-
-  const error = state.zones.length < 1;
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(subscribeTo('roomCreated', (data) => {
+      dispatch(addCards(data.cards))
+      dispatch(logIn(data.username, data.roomname))
+      history.push('/bingo')
+    }));
+    dispatch(subscribeTo('roomCreationError', (data) => {
+      setError('Roomname already in use')
+    }))
+    return () => {
+      dispatch(unsubscribeFrom('roomCreated'))
+      dispatch(unsubscribeFrom('roomCreationError'))
+    }
+  }, [dispatch, history])
 
   const handleCreateRoom = (e) => {
     e.preventDefault();
-    try {
-      createRoom(state);
-      history.push('/')
-    } catch (error) {
-      console.log(error)
-    }
+    dispatch(create(state));
   };
 
   const handleCheckboxChange = (e) => {
@@ -59,11 +72,13 @@ export default function Create({createRoom}) {
         variant='outlined'
         onChange={(e) => setState({...state, room: e.target.value})}
         autoComplete='off'
+        error={error}
+        helperText={error}
       />
       <TextField 
         id='password'
         type='password'
-        label='Leave blank for no password'
+        helperText='Leave blank for no password'
         value={state.password}
         placeholder='Password...'
         variant='outlined'
@@ -72,7 +87,6 @@ export default function Create({createRoom}) {
       />
       <FormControl 
         required
-        error={error}
         component='fieldset'
       >
         <FormGroup className={checkboxContainer} onChange={(e) => handleCheckboxChange(e)}>
