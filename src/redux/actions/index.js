@@ -1,4 +1,4 @@
-import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS } from './actionTypes';
+import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO } from './actionTypes';
 import { CREATE, JOIN } from './actionEvents';
 
 //Bingo
@@ -29,6 +29,18 @@ export const logOut = () => ({
 export const addActiveRooms = (rooms) => ({
   type: ADD_ACTIVE_ROOMS,
   rooms
+})
+
+export const bingo = () => ({
+  type: BINGO
+})
+
+export const showBoard = () => ({
+  type: SHOW_BOARD
+})
+
+export const resetBingo = () => ({
+  type: RESET_BINGO
 })
 
 

@@ -7,3 +7,6 @@ export const RESET = 'RESET';
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
 export const ADD_ACTIVE_ROOMS = 'ADD_ACTIVE_ROOMS';
+export const BINGO = 'BINGO';
+export const SHOW_BOARD = 'SHOW_BOARD';
+export const RESET_BINGO = 'RESET_BINGO';

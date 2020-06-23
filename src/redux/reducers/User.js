@@ -1,6 +1,6 @@
-import { LOG_IN, LOG_OUT, ADD_ACTIVE_ROOMS } from "../actions/actionTypes";
+import { LOG_IN, LOG_OUT, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO } from "../actions/actionTypes";
 
-const initialState = { name: null, room: null, activeRooms: []};
+const initialState = { name: null, room: null, activeRooms: [], hasHadBingo: false, showBingo: false};
 
 const User = (state = initialState, action) => {
   switch (action.type) {
@@ -10,6 +10,23 @@ const User = (state = initialState, action) => {
         name: action.name,
         room: action.room,
       });
+    case BINGO:
+      return ({
+        ...state,
+        hasHadBingo: true,
+        showBingo: true
+      })
+    case SHOW_BOARD:
+      return ({
+        ...state,
+        showBingo: false
+      })
+    case RESET_BINGO:
+      return ({
+        ...state,
+        showBingo: false,
+        hasHadBingo: false
+      })
     case ADD_ACTIVE_ROOMS:
       return ({
         ...state,

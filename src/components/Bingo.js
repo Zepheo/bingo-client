@@ -1,7 +1,7 @@
 import React from 'react'
 import { makeStyles, Button } from '@material-ui/core'
 import { useDispatch } from 'react-redux';
-import {reset} from '../redux/actions';
+import {reset, showBoard, resetBingo} from '../redux/actions';
 
 const useStyles = makeStyles({
   bingo: {
@@ -10,13 +10,17 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Bingo({gotBingo}) {
+export default function Bingo() {
   const {bingo} = useStyles();
   const dispatch = useDispatch();
 
   const playAgain = () => {
-    gotBingo(false)
     dispatch(reset());
+    dispatch(resetBingo())
+  }
+
+  const handleShowBoard = () => {
+    dispatch(showBoard())
   }
   
   return (
@@ -24,7 +28,7 @@ export default function Bingo({gotBingo}) {
       <p className={bingo}>
         BINGO
       </p>
-      <Button variant="contained" color="primary" onClick={playAgain}>Play again</Button>
+      <Button variant="contained" color="primary" onClick={handleShowBoard}>Show board</Button>
     </>
   )
 }
