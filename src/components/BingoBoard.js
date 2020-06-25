@@ -35,7 +35,7 @@ export default function BingoBoard() {
   return (
     <Grid container spacing={1} justify='center' style={{marginLeft: 10, marginRight: 10, width: '75vw'}}>
       {Bingo.map((data, i) => (
-        <Grid item xs={3}>
+        <Grid item xs={3} key={i}>
           <BingoTile data={data} index={i}/>
         </Grid>
       ))}

@@ -1,4 +1,4 @@
-import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED } from './actionTypes';
+import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED, ADD_MESSAGE, RESET_MESSAGES } from './actionTypes';
 import { CREATE, JOIN, USERTICK, RESET_TICKED } from './actionEvents';
 
 //Bingo
@@ -55,6 +55,15 @@ export const updateTicked = ({id, ticked}) => ({
   ticked
 })
 
+// Log
+export const addMessage = (message) => ({
+  type: ADD_MESSAGE,
+  message
+})
+
+export const resetMessages = () => ({
+  type: RESET_MESSAGES,
+})
 
 // Socket actions
 
