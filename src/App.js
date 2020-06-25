@@ -6,7 +6,7 @@ import PlayBingo from './pages/PlayBingo';
 import Create from './pages/Create';
 import Join from './pages/Join';
 import ProtectedRoute from './components/ProtectedRoute'
-import { Container, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { subscribeTo, addActiveRooms, unsubscribeFrom, logOut } from './redux/actions';
 
@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 30,
+    width: '100wv',
+    height: '100vh'
   }
 }))
 
@@ -38,15 +39,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <Navigation /> */}
-      <Container maxWidth='md' className={wrapper}>
+      <div className={wrapper}>
         <Switch>
           <Route exact path='/' component={Landing}/>
           <Route path='/create' component={Create} />
           <Route path='/join' component={Join} />
           <ProtectedRoute path='/bingo' component={PlayBingo} />
         </Switch>
-      </Container>
+      </div>
     </BrowserRouter>
   );
 }

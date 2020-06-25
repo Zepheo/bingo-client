@@ -13,20 +13,23 @@ const useStyles = makeStyles((theme) => ({
   checkboxContainer: {
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  button: {
+    margin: 10
+  },
 }))
 
 export default function Create({createRoom}) {
   const [ state, setState ] = useState({name: '', room: '', password: '', zones: []})
   const [ error, setError ] = useState(null);
-  const { container, checkboxContainer } = useStyles();
+  const { container, checkboxContainer, button } = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
   
   useEffect(() => {
     dispatch(subscribeTo('roomCreated', (data) => {
       dispatch(addCards(data.cards))
-      dispatch(logIn(data.username, data.roomname))
+      dispatch(logIn(data.name, data.room, data.users))
       history.push('/bingo')
     }));
     dispatch(subscribeTo('roomCreationError', (data) => {
@@ -122,7 +125,7 @@ export default function Create({createRoom}) {
           />
         </FormGroup>
       </FormControl>
-      <Button type='submit' variant='contained' color='primary'>Create Room</Button>
+      <Button type='submit' variant='contained' color='primary' className={button}>Create Room</Button>
     </form>
   )
 }

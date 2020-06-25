@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import BingoTile from './BingoTile';
-import { GridList, GridListTile } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { bingo } from '../redux/actions';
 
 export default function BingoBoard() {
@@ -33,12 +33,12 @@ export default function BingoBoard() {
   }, [Bingo, User, dispatch])
 
   return (
-    <GridList cellHeight={200} cols={4}>
-      {Bingo.map(data => (
-        <GridListTile key={data.id}>
-          <BingoTile data={data}/>
-        </GridListTile>
+    <Grid container spacing={1} justify='center' style={{marginLeft: 10, marginRight: 10, width: '75vw'}}>
+      {Bingo.map((data, i) => (
+        <Grid item xs={3}>
+          <BingoTile data={data} index={i}/>
+        </Grid>
       ))}
-    </GridList>
+    </Grid>
   )
 }

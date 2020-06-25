@@ -1,5 +1,5 @@
-import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO } from './actionTypes';
-import { CREATE, JOIN } from './actionEvents';
+import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED } from './actionTypes';
+import { CREATE, JOIN, USERTICK, RESET_TICKED } from './actionEvents';
 
 //Bingo
 export const addCards = (cards) => ({
@@ -16,10 +16,11 @@ export const reset = () => ({
 
 //User
 
-export const logIn = (name, room) => ({
+export const logIn = (name, room, users) => ({
   type: LOG_IN,
   name,
   room,
+  users,
 })
 
 export const logOut = () => ({
@@ -43,6 +44,17 @@ export const resetBingo = () => ({
   type: RESET_BINGO
 })
 
+export const addUsers = (user) => ({
+  type: ADD_USERS,
+  user
+})
+
+export const updateTicked = ({id, ticked}) => ({
+  type: UPDATE_TICKED,
+  id,
+  ticked
+})
+
 
 // Socket actions
 
@@ -56,6 +68,18 @@ export const join = (data) => ({
   event: JOIN,
   emit: true,
   payload: data
+})
+
+export const userTick = (data) => ({
+  event: USERTICK,
+  emit: true,
+  payload: data
+})
+
+export const resetTicked = (room) => ({
+  event: RESET_TICKED,
+  emit: true,
+  payload: room
 })
 
 export const subscribeTo = (event, handle) => ({

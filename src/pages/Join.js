@@ -4,26 +4,28 @@ import { TextField, Button, makeStyles, Typography, FormControl, InputLabel, Sel
 import { useSelector, useDispatch } from 'react-redux';
 import { join, subscribeTo, addCards, logIn, unsubscribeFrom } from '../redux/actions';
 import { useEffect } from 'react';
-// import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   container: {
     flexDirection: 'column',
     display: 'flex',
   },
+  button: {
+    margin: 10
+  },
 }))
 
 export default function Join() {
   const [ state, setState ] = useState({name: '', room: '', password: ''})
   const User = useSelector(s => s.User)
-  const { container } = useStyles();
+  const { container, button } = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(subscribeTo('roomJoined', (data) => {
       dispatch(addCards(data.cards))
-      dispatch(logIn(data.name, data.room))
+      dispatch(logIn(data.name, data.room, data.users))
       history.push('/bingo')
     }))
     return () => {
@@ -87,7 +89,7 @@ export default function Join() {
           />
         }
       </FormControl>
-      <Button type='submit' variant='contained' color='primary'>Join room</Button>
+      <Button type='submit' variant='contained' color='primary' className={button}>Join room</Button>
     </form>
   )
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Paper, makeStyles } from '@material-ui/core'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { setTicked } from '../redux/actions';
+import { setTicked, userTick } from '../redux/actions';
 
 const useStyles = makeStyles({
   done: {
@@ -13,6 +13,10 @@ const useStyles = makeStyles({
     background: 'rgba(255, 255, 255, 0.5)'
   },
   root: {
+    display: 'flex',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     height: '100%',
     padding: 10,
     fontFamily: 'roboto',
@@ -23,12 +27,14 @@ const useStyles = makeStyles({
   }
 });
 
-export default function BingoTile({data}) {
+export default function BingoTile({data, index}) {
+  const { room: { name }} = useSelector(s => s.User)
   const { done, notDone, root } = useStyles();
   const dispatch = useDispatch();
 
   const changeTicked = (id) => {
     dispatch(setTicked(id))
+    dispatch(userTick({index, name}))
   }
 
   return (

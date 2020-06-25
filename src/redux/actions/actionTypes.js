@@ -10,3 +10,5 @@ export const ADD_ACTIVE_ROOMS = 'ADD_ACTIVE_ROOMS';
 export const BINGO = 'BINGO';
 export const SHOW_BOARD = 'SHOW_BOARD';
 export const RESET_BINGO = 'RESET_BINGO';
+export const ADD_USERS = 'ADD_USERS';
+export const UPDATE_TICKED = 'UPDATE_TICKED';

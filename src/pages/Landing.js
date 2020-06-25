@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   button: {
     margin: 10
@@ -35,7 +35,7 @@ export default function Landing() {
           className={button}
           onClick={() => goTo('create')}
         >
-          Create
+          Create room
         </Button>
         <Button
           variant="contained"
@@ -43,7 +43,7 @@ export default function Landing() {
           className={button}
           onClick={() => goTo('join')}
         >
-          Join
+          Join room
         </Button>
       </div>
     </div>
