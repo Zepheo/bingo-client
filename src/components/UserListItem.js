@@ -18,7 +18,7 @@ export default function UserListItem({ user:{ name, ticked } }) {
       <Typography>
         {name}
       </Typography>
-      <GridList cellHeight={10} cols={4} style={{width: 60}}>
+      <GridList spacing={2} cellHeight={10} cols={5} style={{width: 58}}>
         {ticked.map((bool, i) => (
           <GridListTile key={i}>
             <div style={{ height: 10, width: 10, backgroundColor: bool ? 'green' : 'red'}}/>

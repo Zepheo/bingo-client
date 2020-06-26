@@ -35,7 +35,7 @@ export default function Join() {
 
   const handleJoinRoom = (e) => {
     e.preventDefault();
-    dispatch(join({name: state.name, roomname: state.room.name}))
+    dispatch(join({name: state.name, roomname: state.room.name, password: state.password}))
   };
 
   if (User.activeRooms.length < 1) {
