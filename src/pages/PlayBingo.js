@@ -37,13 +37,13 @@ export default function PlayBingo() {
   }
 
   return (
-    <>
+    <React.Fragment>
       <div className={container}>
         {showBingo ? <Bingo /> : <BingoBoard />}
         <Userlist />
       </div>
         {showBingo && <Button variant="contained" color="primary" onClick={handleShowBoard}>Show board</Button>}
         {hasHadBingo && <Button variant="contained" color="secondary" onClick={playAgain}>Play again</Button>}
-    </>
+    </React.Fragment>
   )
 }

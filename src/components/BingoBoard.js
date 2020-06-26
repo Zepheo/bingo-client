@@ -35,10 +35,8 @@ export default function BingoBoard() {
   }, [Bingo, User, dispatch])
 
   return (
-    // <Grid container spacing={1} justify='center' style={{marginLeft: 10, marginRight: 10, width: '75vw'}}>
     <GridList cellHeight='auto' cols={5} style={{marginLeft: 10, marginRight: 10, width: '90vh', height: '90vh'}}>
       {Bingo.map((data, i) => (
-        // <Grid item xs={3} key={i}>
         <GridListTile key={i}>
           <BingoTile data={data} index={i}/>
         </GridListTile>

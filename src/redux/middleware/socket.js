@@ -4,7 +4,7 @@ const socketUrl = process.env.NODE_ENV === 'development' ? 'localhost:8080': 'mi
 const config = {
   'reconnection': false
 };
-const socket = io(socketUrl, config);
+const socket = io(config);
 
 const socketMiddleware = (store) => (next) => (action) => {
     if (typeof action === 'function') {
