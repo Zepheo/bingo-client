@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Join() {
   const [ state, setState ] = useState({name: '', room: '', password: ''})
+  const [ error, setError ] = useState({gotError: false, message: ''});
   const User = useSelector(s => s.User)
   const { container, button } = useStyles();
   const history = useHistory();
@@ -28,8 +29,12 @@ export default function Join() {
       dispatch(logIn(data.name, data.room, data.users))
       history.push('/bingo')
     }))
+    dispatch(subscribeTo('passwordError', (data) => {
+      setError({gotError: true, message: data});
+    }))
     return () => {
       dispatch(unsubscribeFrom('roomJoined'))
+      dispatch(unsubscribeFrom('passwordError'))
     }
   }, [history, dispatch])
 
@@ -86,6 +91,8 @@ export default function Join() {
             variant='outlined'
             onChange={(e) => setState({...state, password: e.target.value})}
             autoComplete='off'
+            error={error.gotError}
+            helperText={error.message}
           />
         }
       </FormControl>

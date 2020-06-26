@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create({createRoom}) {
   const [ state, setState ] = useState({name: '', room: '', password: '', zones: []})
-  const [ error, setError ] = useState(null);
+  const [ error, setError ] = useState({gotError: false, message: ''});
   const { container, checkboxContainer, button } = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function Create({createRoom}) {
       history.push('/bingo')
     }));
     dispatch(subscribeTo('roomCreationError', (data) => {
-      setError('Roomname already in use')
+      setError({gotError: true, message: data})
     }))
     return () => {
       dispatch(unsubscribeFrom('roomCreated'))
@@ -75,8 +75,8 @@ export default function Create({createRoom}) {
         variant='outlined'
         onChange={(e) => setState({...state, room: e.target.value})}
         autoComplete='off'
-        error={error}
-        helperText={error}
+        error={error.gotError}
+        helperText={error.message}
       />
       <TextField 
         id='password'
