@@ -3,7 +3,7 @@ import { Button, TextField, makeStyles, FormGroup, Checkbox, FormControlLabel, F
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { subscribeTo, addCards, logIn, create, unsubscribeFrom} from '../redux/actions';
+import { subscribeTo, addCards, logIn, create, unsubscribeFrom, createCustom, addPresetCards} from '../redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Create({createRoom}) {
   const [ state, setState ] = useState({name: '', room: '', password: '', zones: []})
-  const [ error, setError ] = useState({gotError: false, message: ''});
+  const [ roomError, setRoomError ] = useState({gotError: false, message: ''});
+  const [ nameError, setNameError ] = useState({gotError: false, message: ''});
   const { container, checkboxContainer, button } = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -32,9 +33,20 @@ export default function Create({createRoom}) {
       dispatch(logIn(data.name, data.room, data.users))
       history.push('/bingo')
     }));
+
     dispatch(subscribeTo('roomCreationError', (data) => {
-      setError({gotError: true, message: data})
-    }))
+      setRoomError({gotError: true, message: data})
+    }));
+
+    dispatch(subscribeTo('customRoomCreated', (data) => {
+      console.log(data);
+      dispatch(addPresetCards(data.cards))
+      history.push('/createbingoboard', {
+        room: data.room,
+        name: data.name
+      })
+    }));
+
     return () => {
       dispatch(unsubscribeFrom('roomCreated'))
       dispatch(unsubscribeFrom('roomCreationError'))
@@ -45,6 +57,14 @@ export default function Create({createRoom}) {
     e.preventDefault();
     dispatch(create(state));
   };
+
+  const handleCreateCustomRoom = () => {
+    if (!state.room) setRoomError({gotError: true, message: 'Please fill out this field'});
+    if (!state.name) setNameError({gotError: true, message: 'Please fill out this field'});
+    if (!state.name || !state.room) return;
+    
+    dispatch(createCustom(state));
+  }
 
   const handleCheckboxChange = (e) => {
     let tempZones = [...state.zones]
@@ -66,6 +86,8 @@ export default function Create({createRoom}) {
         variant='outlined'
         onChange={(e) => setState({...state, name: e.target.value})}
         autoComplete='off'
+        error={nameError.gotError}
+        helperText={nameError.message}
       />
       <TextField 
         required
@@ -75,8 +97,8 @@ export default function Create({createRoom}) {
         variant='outlined'
         onChange={(e) => setState({...state, room: e.target.value})}
         autoComplete='off'
-        error={error.gotError}
-        helperText={error.message}
+        error={roomError.gotError}
+        helperText={roomError.message}
       />
       <TextField 
         id='password'
@@ -126,6 +148,7 @@ export default function Create({createRoom}) {
         </FormGroup>
       </FormControl>
       <Button type='submit' variant='contained' color='primary' className={button}>Create Room</Button>
+      <Button type='button' variant='contained' color='secondary' className={button} onClick={handleCreateCustomRoom}>Create room with custom cards</Button>
     </form>
   )
 }

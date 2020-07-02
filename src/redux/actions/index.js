@@ -1,5 +1,5 @@
-import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED, ADD_MESSAGE, RESET_MESSAGES } from './actionTypes';
-import { CREATE, JOIN, USERTICK, RESET_TICKED } from './actionEvents';
+import { SET_TICKED, RESET, LOG_IN, LOG_OUT, ADD_CARDS, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED, ADD_MESSAGE, RESET_MESSAGES, ADD_PRESET_CARDS, REMOVE_PRESET_CARD } from './actionTypes';
+import { CREATE, JOIN, USERTICK, RESET_TICKED, CREATE_CUSTOM, CUSTOM_CARDS } from './actionEvents';
 
 //Bingo
 export const addCards = (cards) => ({
@@ -12,6 +12,14 @@ export const setTicked = (id) => ({
 })
 export const reset = () => ({
   type: RESET
+})
+export const addPresetCards = (cards) => ({
+  type: ADD_PRESET_CARDS,
+  cards
+})
+export const removePresetCard = (id) => ({
+  type: REMOVE_PRESET_CARD,
+  id
 })
 
 //User
@@ -72,6 +80,18 @@ export const create = (data) => ({
   emit: true,
   payload: data
 })
+
+export const createCustom = (data) => ({
+  event: CREATE_CUSTOM,
+  emit: true,
+  payload: data
+});
+
+export const sendCustomCards = (data) => ({
+  event: CUSTOM_CARDS,
+  emit: true,
+  payload: data
+});
 
 export const join = (data) => ({
   event: JOIN,

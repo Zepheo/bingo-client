@@ -2,6 +2,8 @@
 export const ADD_CARDS = 'ADD_CARDS';
 export const SET_TICKED = 'SET_TICKED';
 export const RESET = 'RESET';
+export const ADD_PRESET_CARDS = 'ADD_PRESET_CARDS';
+export const REMOVE_PRESET_CARD = 'REMOVE_PRESET_CARD';
 
 // User
 export const LOG_IN = 'LOG_IN';

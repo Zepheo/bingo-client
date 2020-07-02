@@ -9,6 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { makeStyles } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { subscribeTo, addActiveRooms, unsubscribeFrom, logOut } from './redux/actions';
+import CreateBingo from './pages/CreateBingo';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -42,8 +43,9 @@ function App() {
       <div className={wrapper}>
         <Switch>
           <Route exact path='/' component={Landing}/>
-          <Route path='/create' component={Create} />
-          <Route path='/join' component={Join} />
+          <Route exact path='/create' component={Create} />
+          <Route exact path='/join' component={Join} />
+          <Route exact path='/createbingoboard' component={CreateBingo} />
           <ProtectedRoute path='/bingo' component={PlayBingo} />
         </Switch>
       </div>
