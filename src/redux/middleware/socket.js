@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
 
-const socketUrl = process.env.NODE_ENV === 'development' ? 'localhost:8080': 'mighty-ridge-28972.herokuapp.com';
-const config = {
-  'reconnection': false
-};
-const socket = io(config);
+// const socketUrl = process.env.NODE_ENV === 'development' ? 'localhost:8080': 'mighty-ridge-28972.herokuapp.com';
+// const config = {
+//   'reconnection': false
+// };
+const socket = io();
 
 const socketMiddleware = (store) => (next) => (action) => {
     if (typeof action === 'function') {
@@ -38,7 +38,6 @@ const socketMiddleware = (store) => (next) => (action) => {
       handleEvent = result => store.dispatch({ type: handle, result, ...rest });
     }
     return socket.on(event, handleEvent);
-  // };
 }
 
 export default socketMiddleware;

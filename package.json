@@ -21,6 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "powershell -command 'copy-item -force -recurse build ../server'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -41,5 +42,6 @@
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }

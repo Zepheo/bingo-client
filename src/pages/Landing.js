@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, makeStyles } from '@material-ui/core'
 import { useHistory } from 'react-router-dom';
-// import history from '../utils/history';
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -26,7 +25,7 @@ export default function Landing() {
   return (
     <div className={wrapper}>
       <h1>
-        Välkommen till Bingo        
+        Välkommen till bingo        
       </h1>
       <div>
         <Button
