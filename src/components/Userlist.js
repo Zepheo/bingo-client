@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles, Paper, List, ListItem, Divider, Typography } from '@material-ui/core'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { subscribeTo, addUsers, updateTicked, addMessage } from '../redux/actions';
+import { subscribeTo, addUsers, updateTicked, addMessage, unsubscribeFrom, addCardOrder } from '../redux/actions';
 import UserListItem from './UserListItem';
 import Log from './Log';
 
@@ -44,6 +44,15 @@ export default function Userlist() {
       dispatch(addMessage(logMsg))
       dispatch(updateTicked({id, name, ticked}))
     }))
+    dispatch(subscribeTo('newCardOrder', ({id, name, ticked}) => {
+      dispatch(addCardOrder({id, ticked}));
+    }))
+
+    return () => {
+      dispatch(unsubscribeFrom('userJoined'))
+      dispatch(unsubscribeFrom('ticked'))
+      dispatch(unsubscribeFrom('newCardOrder'))
+    }
   }, [dispatch])
 
   return (

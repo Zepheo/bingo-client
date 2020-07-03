@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED } from "../actions/actionTypes";
+import { LOG_IN, LOG_OUT, ADD_ACTIVE_ROOMS, BINGO, SHOW_BOARD, RESET_BINGO, ADD_USERS, UPDATE_TICKED, ADD_CARD_ORDER } from "../actions/actionTypes";
 
 const initialState = { name: null, room: null, activeRooms: [], hasHadBingo: false, showBingo: false};
 
@@ -27,6 +27,14 @@ const User = (state = initialState, action) => {
         }
       });
     case UPDATE_TICKED:
+      return ({
+        ...state,
+        room: {
+          ...state.room,
+          users: state.room.users.map((user) => user.id === action.id ? ({...user, ticked: action.ticked}) : user)
+        }
+      })
+    case ADD_CARD_ORDER:
       return ({
         ...state,
         room: {

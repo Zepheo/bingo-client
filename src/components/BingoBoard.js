@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import BingoTile from './BingoTile';
 import { GridList, GridListTile } from '@material-ui/core';
-import { bingo } from '../redux/actions';
+import { bingo, sendCardOrder } from '../redux/actions';
 
 export default function BingoBoard() {
   const { Bingo, User } = useSelector(s => s);
@@ -33,6 +33,11 @@ export default function BingoBoard() {
       dispatch(bingo());
     }
   }, [Bingo, User, dispatch])
+
+  useEffect(() => {
+    const idOrder = Bingo.map(card => card.id)
+    dispatch(sendCardOrder({idOrder, room: User.room.name}));
+  }, [])
 
   return (
     <GridList cellHeight='auto' cols={5} style={{marginLeft: 10, marginRight: 10, width: '90vh', height: '90vh'}}>
