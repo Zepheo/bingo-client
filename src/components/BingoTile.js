@@ -48,7 +48,7 @@ export default function BingoTile({data, index}) {
 
   const changeTicked = (id) => {
     dispatch(setTicked(id))
-    dispatch(userTick({index, name, id: data.id}))
+    dispatch(userTick({index, name, id: data.id, text: data.data}))
   }
 
   if (data.free) {
