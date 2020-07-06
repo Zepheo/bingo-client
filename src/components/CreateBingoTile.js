@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 });
 
 function SimpleDialog(props) {
-  const { Bingo } = useSelector(s => s);
+  const { Bingo: { cards } } = useSelector(s => s);
   const { onClose, selectedValue, open } = props;
 
   const handleClose = () => {
@@ -56,7 +56,7 @@ function SimpleDialog(props) {
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">Choose preset</DialogTitle>
       <List>
-        {Bingo.map((card) => (
+        {cards.map((card) => (
           <ListItem button onClick={() => handleListItemClick(card)} key={card.data}>
             <ListItemText primary={card.data} />
           </ListItem>
