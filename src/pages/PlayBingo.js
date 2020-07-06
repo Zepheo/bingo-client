@@ -1,7 +1,6 @@
 import React from 'react'
-import { makeStyles, Button } from '@material-ui/core'
+import { makeStyles, Button, Modal } from '@material-ui/core'
 
-import Bingo from '../components/Bingo'
 import BingoBoard from '../components/BingoBoard'
 import Image from '../img/GnomeHeader02-Header-110215.jpg'
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,6 +11,16 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     height: '90%'
+  },
+  bingo: {
+    color: 'gold',
+    fontSize: 200,
+    textAlign: 'center'
+  },
+  button: {
+    alignSelf: 'center',
+    justifySelf: 'center',
+    margin: 10
   },
   '@global': {
     body: {
@@ -24,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 export default function PlayBingo() {
   const { showBingo, hasHadBingo, room: { name } } = useSelector((s) => s.User)
   const dispatch = useDispatch();
-  const { container } = useStyles();
+  const { container, bingo, button } = useStyles();
 
   const playAgain = () => {
     dispatch(reset());
@@ -39,11 +48,22 @@ export default function PlayBingo() {
   return (
     <React.Fragment>
       <div className={container}>
-        {showBingo ? <Bingo /> : <BingoBoard />}
+        <Modal
+          open={showBingo}
+          onClose={handleShowBoard}
+        >
+          <div style={{display: 'flex', flexDirection: 'column', width: '100%', outline: 0}}>
+            <p className={bingo}>
+              BINGO
+            </p>
+            <Button variant="contained" color="primary" onClick={handleShowBoard} className={button}>Show board</Button>
+            <Button variant="contained" color="secondary" onClick={playAgain} className={button}>Play again</Button>
+          </div>
+        </Modal>
+        <BingoBoard />
         <Userlist />
       </div>
-        {showBingo && <Button variant="contained" color="primary" onClick={handleShowBoard}>Show board</Button>}
-        {hasHadBingo && <Button variant="contained" color="secondary" onClick={playAgain}>Play again</Button>}
+        { !showBingo && hasHadBingo && <Button variant="contained" color="secondary" onClick={playAgain}>Play again</Button>}
     </React.Fragment>
   )
 }

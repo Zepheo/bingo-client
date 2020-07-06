@@ -44,7 +44,8 @@ export default function Userlist() {
       dispatch(addMessage(logMsg))
       dispatch(updateTicked({id, name, ticked}))
     }))
-    dispatch(subscribeTo('newCardOrder', ({id, name, ticked}) => {
+    dispatch(subscribeTo('newCardOrder', (data) => {
+      const {id, ticked} = data
       dispatch(addCardOrder({id, ticked}));
     }))
 
@@ -64,10 +65,10 @@ export default function Userlist() {
         <List className={userContainer}>
           {users.map((user, i) => (
             <React.Fragment key={i}>
-            <ListItem >
-              <UserListItem user={user} />
-            </ListItem>
-            {i < users.length -1 && <Divider />}
+              <ListItem >
+                <UserListItem user={user} />
+              </ListItem>
+              {i < users.length -1 && <Divider />}
             </React.Fragment>
           ))}
         </List>

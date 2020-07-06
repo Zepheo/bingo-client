@@ -7,25 +7,43 @@ const freeCard = {
   free: true,
 };
 
-const initialState = [];
+const initialState = {
+  cards: [],
+  cardOrder: []
+};
 
 const Bingo = (state = initialState, action) => {
   switch (action.type) {
     case ADD_CARDS:
       const cards = arrayShuffle(action.cards);
       cards.splice(12, 0, freeCard);
-      return cards
+      return {
+        cards, 
+        cardOrder: cards.map(c => c.id)
+      }
     case SET_TICKED:
-      return state.map((data) => data.id === action.id ? ({...data, ticked: !data.ticked}): data);
+      return {
+        ...state,
+        cards: state.cards.map((data) => data.id === action.id ? ({...data, ticked: !data.ticked}): data)
+      };
     case ADD_PRESET_CARDS:
-      return action.cards;
+      return {
+        ...state,
+        cards: action.cards,
+      };
     case REMOVE_PRESET_CARD:
-      return state.filter(v => v.id !== action.id)
+      return {
+        ...state,
+        cards: state.cards.filter(v => v.id !== action.id)
+      }
     case RESET:
-      state.splice(12, 1);
-      const cardsReset = arrayShuffle(state).map((data) => ({...data, ticked: false}))
+      state.cards.splice(12, 1);
+      const cardsReset = arrayShuffle(state.cards).map((data) => ({...data, ticked: false}))
       cardsReset.splice(12, 0, freeCard);
-      return cardsReset;
+      return {
+        cards: cardsReset,
+        cardOrder: cardsReset.map(c => c.id)
+      }
     default:
       return state;
   }

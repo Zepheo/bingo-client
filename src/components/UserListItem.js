@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function UserListItem({ user:{ name, ticked } }) {
-  const { Bingo } = useSelector(s => s);
+  const { Bingo: { cards } } = useSelector(s => s);
   const { wrapper } = useStyles();
 
   return (
@@ -25,13 +25,16 @@ export default function UserListItem({ user:{ name, ticked } }) {
         {ticked.map((c, i) => {
           let text = '';
           if (c.hasOwnProperty('id') && c.id) {
-            console.log(c);
-            const { data } = Bingo.find(card => card.id === c.id)
+            const { data } = cards.find(card => card.id === c.id)
             text = data;
           }
+          if (c.id === null) {
+            text = 'Free';
+          }
+          
           return (
-            <Tooltip title={text || 'Loading...'} placement="bottom">
-              <GridListTile key={i}>
+            <Tooltip title={text || 'Loading...'} placement="bottom" key={i}>
+              <GridListTile>
                 <div style={{ height: 10, width: 10, backgroundColor: c.ticked || i === 12 ? 'green' : 'red'}}/>
               </GridListTile>
             </Tooltip>
